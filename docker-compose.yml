@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  blog_service:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
+      - ./scripts/init.sql:/data/application/init.sql
+    container_name: blog_service
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=Asia/Shanghai
+      - MYSQL_DATABASE=blog_service
+      - MYSQL_USER=blog_service
+      - MYSQL_PASSWORD=blog_service
+    restart: unless-stopped
