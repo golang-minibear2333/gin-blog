@@ -8,7 +8,18 @@ golang写的博客系统（Go 语言编程之旅第二章的练习）
 
 ### 功能与目录
 
-|功能|目录|commit id|备注|
-|:---|:---|:---|:---|
-|数据库与model|[scripts/init.sql](scripts/init.sql)、[internal/model](internal/model)|[9c23f238a89208d80f5a7e4892091b6baad846fb](https://github.com/golang-minibear2333/gin-blog/commit/9c23f238a89208d80f5a7e4892091b6baad846fb)|创建数据库脚本与model|
-|路由|[internal/routers](internal/routers)|[9fc61621bde26e3181a0c64d87aa1f7c8f758a5c](https://github.com/golang-minibear2333/gin-blog/commit/9fc61621bde26e3181a0c64d87aa1f7c8f758a5c)|新增router和controller|
+见 [CHANGELOG.md](CHANGELOG.md)
+
+### 库
+
+gin框架: Go 编写的一个 HTTP Web 框架,除了快以外，还具备小巧、精美且易用的特性，目前广受 Go 语言开发者的喜爱，是最流行的 HTTP Web 框架
+
+```shell
+go get -u github.com/gin-gonic/gin@v1.6.3
+```
+
+配置管理
+
+```shell
+go get -u github.com/spf13/viper@v1.4.0
+```

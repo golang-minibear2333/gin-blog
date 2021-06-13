@@ -1,0 +1,25 @@
+#  Server：服务配置，设置 gin 的运行模式、默认的 HTTP 监听端口、允许读取和写入的最大持续时间。
+Server:
+  RunMode: debug
+  HttpPort: 8000
+  ReadTimeout: 60
+  WriteTimeout: 60
+#  App：应用配置，设置默认每页数量、所允许的最大每页数量以及默认的应用日志存储路径。
+App:
+  DefaultPageSize: 10
+  MaxPageSize: 100
+  LogSavePath: storage/logs
+  LogFileName: app
+  LogFileExt: .log
+#  Database：数据库配置，主要是连接实例所必需的基础参数。
+Database:
+  DBType: mysql
+  Username: blog_service  # 填写你的数据库账号
+  Password: blog_service  # 填写你的数据库密码
+  Host: 127.0.0.1:3306
+  DBName: blog_service
+  TablePrefix: blog_
+  Charset: utf8
+  ParseTime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 30
