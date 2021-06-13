@@ -29,6 +29,11 @@ func init() {
 		log.Fatalf("init.setupDBEngine err: %v", err)
 	}
 }
+
+// @title 博客系统
+// @version 1.0
+// @description Go 语言编程之旅：一起用 Go 做项目
+// @termsOfService https://github.com/golang-minibear2333/gin-blog
 func main() {
 	global.Logger.Infof("%s: go-programming-tour-book/%s", "eddycjy", "blog-service")
 	gin.SetMode(global.ServerSetting.RunMode)

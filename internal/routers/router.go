@@ -2,7 +2,10 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
+	_ "github.com/golang-minibear2333/gin-blog/docs"
 	v1 "github.com/golang-minibear2333/gin-blog/internal/routers/api/v1"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 func NewRouter() *gin.Engine {
@@ -10,6 +13,8 @@ func NewRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
+	// 访问 /swagger/index.html 可以查看效果
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	article := v1.NewArticle()
 	tag := v1.NewTag()
 	apiv1 := r.Group("/api/v1")
