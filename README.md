@@ -44,3 +44,9 @@ go get -u github.com/swaggo/gin-swagger@v1.2.0
 go get -u github.com/swaggo/files
 go get -u github.com/alecthomas/template
 ```
+
+参数校验
+
+```shell
+go get -u github.com/go-playground/validator/v10
+```

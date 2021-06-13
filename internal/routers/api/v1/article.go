@@ -15,7 +15,7 @@ func NewArticle() Article {
 func (a Article) Get(c *gin.Context)    {
 }
 func (a Article) List(c *gin.Context)   {
-	// 接口测试 http://localhost:8000/api/v1/article
+	// 错误码接口测试 http://localhost:8000/api/v1/article
 	app.NewResponse(c).ToErrorResponse(errcode.ServerError)
 	return
 }
