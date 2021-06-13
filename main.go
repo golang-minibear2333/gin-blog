@@ -5,7 +5,9 @@ import (
 	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/internal/model"
 	"github.com/golang-minibear2333/gin-blog/internal/routers"
+	"github.com/golang-minibear2333/gin-blog/pkg/logger"
 	"github.com/golang-minibear2333/gin-blog/pkg/setting"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"net/http"
 	"time"
@@ -17,6 +19,10 @@ func init() {
 	if err != nil {
 		log.Fatalf("init.setupSetting err: %v", err)
 	}
+	err = setupLogger()
+	if err != nil {
+		log.Fatalf("init.setupLogger err: %v", err)
+	}
 	// 数据库orm配置初始化
 	err = setupDBEngine()
 	if err != nil {
@@ -24,6 +30,7 @@ func init() {
 	}
 }
 func main() {
+	global.Logger.Infof("%s: go-programming-tour-book/%s", "eddycjy", "blog-service")
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
 	s := &http.Server{
@@ -66,6 +73,18 @@ func setupDBEngine() error {
 	if err != nil {
 		return err
 	}
+
+	return nil
+}
+
+
+func setupLogger() error {
+	global.Logger = logger.NewLogger(&lumberjack.Logger{
+		Filename: global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
+		MaxSize:   600,
+		MaxAge:    10,
+		LocalTime: true,
+	}, "", log.LstdFlags).WithCaller(2)
 
 	return nil
 }

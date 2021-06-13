@@ -29,3 +29,9 @@ ORM 数据库连接操作
 ```shell
 go get -u github.com/jinzhu/gorm@v1.9.12
 ```
+
+日志库: 单日志文件的最大占用空间、最大生存周期、允许保留的最多旧文件数（日志滚动），而我们使用这个库，主要是为了减免一些文件操作类的代码编写，把核心逻辑摆在日志标准化处理上
+
+```shell
+go get -u gopkg.in/natefinch/lumberjack.v2
+```
