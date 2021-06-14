@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# An hook script to check the commit log message.
+# Called by "git commit" with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+#
+# To enable this hook, copy this file to ".git/hooks/commit-msg" and
+# ensure it is executable.
+#
+#
+# NOTE:
+#  Unless the server-side counterpart, this script only enforces
+#  commits. Messages i.e. generated during a `git revert` or a
+#  `git merge` are not passing this script.
+#
+
+test -n "$(grep -E '^((revert)|((feat|fix|docs|style|refactor|perf|test|chore)\(.+\))): .{7,}' ${1})" || {
+    echo >&2 "ERROR: Commit message does not following the commit styleguide."
+    echo >&2 "       Please check the following guide:"
+    echo >&2 "           https://github.com/angular/angular.js/blob/v1.5.0/CONTRIBUTING.md#commit"
+    echo >&2 ""
+    echo >&2 "SYNTAX:"
+    echo >&2 "    <type>(<scope>): <subject>"
+    echo >&2 ""
+    echo >&2 "    <descriptive body>"
+    echo >&2 ""
+    echo >&2 "TYPE:"
+    echo >&2 "    feat: A new feature"
+    echo >&2 "    fix: A bug fix"
+    echo >&2 "    docs: Documentation only changes"
+    echo >&2 "    style: Changes that do not affect the meaning of the code"
+    echo >&2 "    refactor: A code change that neither fixes a bug nor adds a feature"
+    echo >&2 "    perf: A code change that improves performance"
+    echo >&2 "    test: Adding missing tests"
+    echo >&2 "    chore: Changes to the build process or auxiliary tools and libraries"
+    echo >&2 ""
+    echo >&2 "EXAMPLE:"
+    echo >&2 "    perf(ngAnimate): avoid jqLite/jQuery for upward DOM traversal"
+    echo >&2 ""
+    echo >&2 "    The 'parentNode' property is well supported between all browsers. Since"
+    echo >&2 "    no other functionality was required here, we can use the DOM API directly."
+    exit 1
+}
