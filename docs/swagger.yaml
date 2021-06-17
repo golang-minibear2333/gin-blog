@@ -24,8 +24,10 @@ definitions:
       created_by:
         type: string
       created_on:
+        description: 创建时间
         type: integer
       deleted_on:
+        description: 删除时间
         type: integer
       id:
         type: integer
@@ -34,6 +36,7 @@ definitions:
       modified_by:
         type: string
       modified_on:
+        description: 更新时间
         type: integer
       name:
         type: string
@@ -109,7 +112,7 @@ paths:
         schema:
           type: string
       - default: 1
-        description: 状态
+        description: 是否启用(0 为禁用、1 为启用)
         enum:
         - 0
         - 1
@@ -180,7 +183,7 @@ paths:
         schema:
           type: string
       - default: 1
-        description: 状态
+        description: 是否启用(0 为禁用、1 为启用)
         enum:
         - 0
         - 1

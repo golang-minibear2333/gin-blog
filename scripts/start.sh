@@ -1,0 +1,1 @@
+pushd ../ && docker-compose up -d

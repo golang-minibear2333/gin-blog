@@ -91,7 +91,7 @@
                             1
                         ],
                         "default": 1,
-                        "description": "状态",
+                        "description": "是否启用(0 为禁用、1 为启用)",
                         "name": "state",
                         "in": "body",
                         "schema": {
@@ -162,7 +162,7 @@
                             1
                         ],
                         "default": 1,
-                        "description": "状态",
+                        "description": "是否启用(0 为禁用、1 为启用)",
                         "name": "state",
                         "in": "body",
                         "schema": {
@@ -278,9 +278,11 @@
                     "type": "string"
                 },
                 "created_on": {
+                    "description": "创建时间",
                     "type": "integer"
                 },
                 "deleted_on": {
+                    "description": "删除时间",
                     "type": "integer"
                 },
                 "id": {
@@ -293,6 +295,7 @@
                     "type": "string"
                 },
                 "modified_on": {
+                    "description": "更新时间",
                     "type": "integer"
                 },
                 "name": {
