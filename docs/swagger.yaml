@@ -136,6 +136,8 @@ paths:
             $ref: '#/definitions/errcode.Error'
       summary: 获取多个标签
     post:
+      consumes:
+      - application/json
       parameters:
       - description: 请求体
         in: body
