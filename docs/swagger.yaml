@@ -186,6 +186,8 @@ paths:
             $ref: '#/definitions/errcode.Error'
       summary: 删除标签
     put:
+      consumes:
+      - application/json
       parameters:
       - description: 标签 ID
         in: path
