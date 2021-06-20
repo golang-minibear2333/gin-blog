@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/golang-minibear2333/gin-blog/docs"
 	"github.com/golang-minibear2333/gin-blog/internal/middleware"
+	"github.com/golang-minibear2333/gin-blog/internal/routers/api"
 	v1 "github.com/golang-minibear2333/gin-blog/internal/routers/api/v1"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -20,10 +21,15 @@ func NewRouter() *gin.Engine {
 	// 访问 /swagger/index.html 可以查看效果
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.GET("/swagger", func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently,"/swagger/index.html") // 重定向
+		c.Redirect(http.StatusMovedPermanently, "/swagger/index.html") // 重定向
 	})
 	article := v1.NewArticle()
 	tag := v1.NewTag()
+	// 上传文件功能
+	upload := api.NewUpload()
+	// curl -X POST http://127.0.0.1:8000/upload/file -F file=@/Users/xxx/Downloads/golang.png  -F type=1
+	r.POST("/upload/file", upload.UploadFile)
+
 	apiv1 := r.Group("/api/v1")
 	{
 		apiv1.POST("/tags", tag.Create)
