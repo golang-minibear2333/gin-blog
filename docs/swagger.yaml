@@ -53,6 +53,39 @@ definitions:
         $ref: '#/definitions/app.Pager'
         type: object
     type: object
+  service.CreateTagRequest:
+    properties:
+      created_by:
+        description: 创建者
+        type: string
+      name:
+        description: 标签名称
+        type: string
+      state:
+        description: 状态，是否启用(0 为禁用、1 为启用)
+        type: integer
+    required:
+    - created_by
+    - name
+    type: object
+  service.UpdateTagRequest:
+    properties:
+      id:
+        description: 标签id
+        type: integer
+      modifiedBy:
+        description: 修改者
+        type: string
+      name:
+        description: 标签名称
+        type: string
+      state:
+        description: 状态，是否启用(0 为禁用、1 为启用)
+        type: integer
+    required:
+    - id
+    - modifiedBy
+    type: object
 info:
   contact: {}
   description: Go 语言编程之旅：一起用 Go 做项目
@@ -70,14 +103,15 @@ paths:
         name: name
         type: string
       - default: 1
-        description: 状态
+        description: 状态，是否启用(0 为禁用、1 为启用)
         enum:
         - 0
         - 1
         in: query
         name: state
         type: integer
-      - description: 页码
+      - default: 1
+        description: 页码
         in: query
         name: page
         type: integer
@@ -103,31 +137,12 @@ paths:
       summary: 获取多个标签
     post:
       parameters:
-      - description: 标签名称
+      - description: 请求体
         in: body
-        maxLength: 100
-        minLength: 3
-        name: name
+        name: data
         required: true
         schema:
-          type: string
-      - default: 1
-        description: 是否启用(0 为禁用、1 为启用)
-        enum:
-        - 0
-        - 1
-        in: body
-        name: state
-        schema:
-          type: integer
-      - description: 创建者
-        in: body
-        maxLength: 100
-        minLength: 3
-        name: created_by
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/service.CreateTagRequest'
       produces:
       - application/json
       responses:
@@ -175,30 +190,12 @@ paths:
         name: id
         required: true
         type: integer
-      - description: 标签名称
+      - description: 请求体
         in: body
-        maxLength: 100
-        minLength: 3
-        name: name
-        schema:
-          type: string
-      - default: 1
-        description: 是否启用(0 为禁用、1 为启用)
-        enum:
-        - 0
-        - 1
-        in: body
-        name: state
-        schema:
-          type: integer
-      - description: 修改者
-        in: body
-        maxLength: 100
-        minLength: 3
-        name: modified_by
+        name: data
         required: true
         schema:
-          type: string
+          $ref: '#/definitions/service.UpdateTagRequest'
       produces:
       - application/json
       responses:

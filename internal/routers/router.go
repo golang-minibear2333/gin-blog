@@ -7,6 +7,7 @@ import (
 	v1 "github.com/golang-minibear2333/gin-blog/internal/routers/api/v1"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"net/http"
 )
 
 func NewRouter() *gin.Engine {
@@ -18,6 +19,9 @@ func NewRouter() *gin.Engine {
 
 	// 访问 /swagger/index.html 可以查看效果
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.GET("/swagger", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently,"/swagger/index.html") // 重定向
+	})
 	article := v1.NewArticle()
 	tag := v1.NewTag()
 	apiv1 := r.Group("/api/v1")

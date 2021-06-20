@@ -39,7 +39,10 @@ func (v ValidErrors) Errors() []string {
 // BindAndValid 绑定校验，校验请求参数是否合法与翻译成对应语言
 func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
 	var errs ValidErrors
-	err := c.ShouldBind(v)
+	err := c.ShouldBindJSON(v)
+	if err!=nil && err.Error() == "EOF"{
+		err = c.ShouldBind(v)
+	}
 	if err != nil {
 		v := c.Value("trans")
 		// 翻译模块
