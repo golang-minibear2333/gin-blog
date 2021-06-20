@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/golang-minibear2333/gin-blog/docs"
+	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/internal/middleware"
 	"github.com/golang-minibear2333/gin-blog/internal/routers/api"
 	v1 "github.com/golang-minibear2333/gin-blog/internal/routers/api/v1"
@@ -29,6 +30,8 @@ func NewRouter() *gin.Engine {
 	upload := api.NewUpload()
 	// curl -X POST http://127.0.0.1:8000/upload/file -F file=@/Users/xxx/Downloads/golang.png  -F type=1
 	r.POST("/upload/file", upload.UploadFile)
+	// 提供静态文件目录访问
+	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 
 	apiv1 := r.Group("/api/v1")
 	{
