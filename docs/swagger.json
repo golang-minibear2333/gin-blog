@@ -112,6 +112,9 @@
         },
         "/api/v1/tags/{id}": {
             "put": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],

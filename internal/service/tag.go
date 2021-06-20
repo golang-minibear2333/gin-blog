@@ -26,7 +26,7 @@ type CreateTagRequest struct {
 type UpdateTagRequest struct {
 	ID         uint32 `form:"id" binding:"required,gte=1"`                  // 标签id
 	Name       string `form:"name" binding:"max=100"`                       // 标签名称
-	State      uint8  `form:"state" binding:"oneof=0 1"`                    //状态，是否启用(0 为禁用、1 为启用)
+	State      *uint8  `form:"state" binding:"omitempty,oneof=0 1"`                    //状态，是否启用(0 为禁用、1 为启用)
 	ModifiedBy string `form:"modified_by" binding:"required,min=2,max=100"` // 修改者
 }
 
