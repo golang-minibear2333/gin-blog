@@ -65,10 +65,7 @@ func (t Tag) List(c *gin.Context) {
 // Create
 // @Summary 新增标签
 // @Produce  json
-<<<<<<< Updated upstream
-=======
 // @accept json
->>>>>>> Stashed changes
 // @Param data body service.CreateTagRequest true "请求体"
 // @Success 200 {object} model.Tag "成功"
 // @Failure 400 {object} errcode.Error "请求错误"
