@@ -13,6 +13,7 @@ type ValidError struct {
 	Key     string
 	Message string
 }
+
 // ValidErrors 自定义数组错误类型
 type ValidErrors []*ValidError
 
@@ -36,13 +37,9 @@ func (v ValidErrors) Errors() []string {
 	return errs
 }
 
-// BindAndValid 绑定校验，校验请求参数是否合法与翻译成对应语言
-func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
+// bindAndValid 绑定校验，校验请求参数是否合法与翻译成对应语言
+func bindAndValid(c *gin.Context, err error) (bool, ValidErrors) {
 	var errs ValidErrors
-	err := c.ShouldBindJSON(v)
-	if err!=nil && err.Error() == "EOF"{
-		err = c.ShouldBind(v)
-	}
 	if err != nil {
 		v := c.Value("trans")
 		// 翻译模块
@@ -64,4 +61,16 @@ func BindAndValid(c *gin.Context, v interface{}) (bool, ValidErrors) {
 	}
 
 	return true, nil
+}
+func BindAndValidBody(c *gin.Context, v interface{}) (bool, ValidErrors) {
+	err := c.ShouldBindJSON(v)
+	if err != nil && err.Error() == "EOF" {
+		err = c.ShouldBind(v)
+	}
+	return bindAndValid(c, err)
+}
+func BindAndValidHeader(c *gin.Context, v interface{}) (bool, ValidErrors) {
+	err := c.ShouldBindHeader(v)
+	return bindAndValid(c, err)
+
 }

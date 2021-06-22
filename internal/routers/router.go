@@ -32,6 +32,8 @@ func NewRouter() *gin.Engine {
 	r.POST("/upload/file", upload.UploadFile)
 	// 提供静态文件目录访问
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
+	// JWT 权限校验
+	r.POST("/auth", api.GetAuth)
 
 	apiv1 := r.Group("/api/v1")
 	{
