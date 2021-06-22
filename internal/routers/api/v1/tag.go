@@ -32,7 +32,7 @@ func (t Tag) List(c *gin.Context) {
 	param := service.TagListRequest{}
 	response := app.NewResponse(c)
 	// 使用 internal/service/tag.go 内的结构体验证ctx请求带上的参数是否合法，并根据地域进行翻译报错
-	valid, errs := app.BindAndValid(c, &param)
+	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
 		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
@@ -74,7 +74,7 @@ func (t Tag) List(c *gin.Context) {
 func (t Tag) Create(c *gin.Context) {
 	param := service.CreateTagRequest{}
 	response := app.NewResponse(c)
-	valid, errs := app.BindAndValid(c, &param)
+	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
 		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
@@ -106,7 +106,7 @@ func (t Tag) Create(c *gin.Context) {
 func (t Tag) Update(c *gin.Context) {
 	param := service.UpdateTagRequest{ID: convert.StrTo(c.Param("id")).MustUInt32()}
 	response := app.NewResponse(c)
-	valid, errs := app.BindAndValid(c, &param)
+	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
 		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
@@ -136,7 +136,7 @@ func (t Tag) Update(c *gin.Context) {
 func (t Tag) Delete(c *gin.Context) {
 	param := service.DeleteTagRequest{ID: convert.StrTo(c.Param("id")).MustUInt32()}
 	response := app.NewResponse(c)
-	valid, errs := app.BindAndValid(c, &param)
+	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
 		// TODO 这些代码重复太多次有办法抽出来吗？
 		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
