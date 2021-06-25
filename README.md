@@ -10,9 +10,31 @@ golang写的博客系统（Go 语言编程之旅第二章的练习）
 
 见 [CHANGELOG.md](CHANGELOG.md)
 
+### 入门指引
+
+见 [STARTED.md](STARTED.md)
+
 ### 库
 
 gin框架: Go 编写的一个 HTTP Web 框架,除了快以外，还具备小巧、精美且易用的特性，目前广受 Go 语言开发者的喜爱，是最流行的 HTTP Web 框架
+
+
+#### 配置代理
+
+在执行前先设置好环境变量“GOPROXY”和“GO111MODULE”：
+```shell
+export GO111MODULE=on 
+
+export GOPROXY=https://goproxy.io
+或者
+export GOPROXY=https://goproxy.cn 
+```
+对于1.13及以上版本，可直接如下这样：
+```shell
+go env -w GOPROXY=https://goproxy.cn,direct 
+```
+
+#### 库安装
 
 ```shell
 go get -u github.com/gin-gonic/gin@v1.6.3
