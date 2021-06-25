@@ -54,7 +54,7 @@ go get -u github.com/go-playground/validator/v10
 项目已经配置相关的数据库文件，需要直接运行` docker-compose.yml`即可，启动命令如下
 
 ```shell
-docker-compose up
+docker-compose up -d
 ```
 注意启动这个文件需要确保3306端口没有被占用
 
