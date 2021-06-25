@@ -30,37 +30,37 @@ export GOPROXY=https://goproxy.io
 export GOPROXY=https://goproxy.cn 
 ```
 对于1.13及以上版本，可直接如下这样：
-```shell
+```go
 go env -w GOPROXY=https://goproxy.cn,direct 
 ```
 
 #### 库安装
 
-```shell
+```go
 go get -u github.com/gin-gonic/gin@v1.6.3
 ```
 
 配置管理
 
-```shell
+```go
 go get -u github.com/spf13/viper@v1.4.0
 ```
 
 ORM 数据库连接操作
 
-```shell
+```go
 go get -u github.com/jinzhu/gorm@v1.9.12
 ```
 
 日志库: 单日志文件的最大占用空间、最大生存周期、允许保留的最多旧文件数（日志滚动），而我们使用这个库，主要是为了减免一些文件操作类的代码编写，把核心逻辑摆在日志标准化处理上
 
-```shell
+```go
 go get -u gopkg.in/natefinch/lumberjack.v2
 ```
 
 接口文档：使用swag init初始化
 
-```shell
+```go
 go get -u github.com/swaggo/swag/cmd/swag@v1.6.5
 go get -u github.com/swaggo/gin-swagger@v1.2.0 
 go get -u github.com/swaggo/files
@@ -69,6 +69,6 @@ go get -u github.com/alecthomas/template
 
 参数校验
 
-```shell
+```go
 go get -u github.com/go-playground/validator/v10
 ```
