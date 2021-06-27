@@ -18,8 +18,10 @@ func NewTag() Tag {
 func (t Tag) Get(c *gin.Context) {}
 
 // List tag list
+// @tags tag
 // @Summary 获取多个标签
 // @Produce  json
+// @Param token header string true  "用户token"
 // @Param name query string false "标签名称" maxlength(100)
 // @Param state query int false "状态，是否启用(0 为禁用、1 为启用)" Enums(0, 1) default(1)
 // @Param page query int false "页码" default(1)
@@ -63,9 +65,11 @@ func (t Tag) List(c *gin.Context) {
 }
 
 // Create
+// @tags tag
 // @Summary 新增标签
 // @Produce  json
 // @accept json
+// @Param token header string true  "用户token"
 // @Param data body service.CreateTagRequest true "请求体"
 // @Success 200 {object} model.Tag "成功"
 // @Failure 400 {object} errcode.Error "请求错误"
@@ -94,9 +98,11 @@ func (t Tag) Create(c *gin.Context) {
 }
 
 // Update tag update
+// @tags tag
 // @Summary 更新标签
 // @Produce  json
 // @accept json
+// @Param token header string true  "用户token"
 // @Param id path int true "标签 ID"
 // @Param data body service.UpdateTagRequest true "请求体"
 // @Success 200 {object} model.Tag "成功"
@@ -127,7 +133,9 @@ func (t Tag) Update(c *gin.Context) {
 
 // Delete tag delete
 // @Summary 删除标签
+// @tags tag
 // @Produce  json
+// @Param token header string true  "用户token"
 // @Param id path int true "标签 ID"
 // @Success 200 {string} string "成功"
 // @Failure 400 {object} errcode.Error "请求错误"
