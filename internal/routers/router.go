@@ -35,21 +35,27 @@ func NewRouter() *gin.Engine {
 	// JWT 权限校验
 	r.POST("/auth", api.GetAuth)
 
-	apiv1 := r.Group("/api/v1")
+	v1 := r.Group("/api/v1")
+	v1.Use(middleware.JWT())
 	{
-		apiv1.POST("/tags", tag.Create)
-		apiv1.DELETE("/tags/:id", tag.Delete)
-		apiv1.PUT("/tags/:id", tag.Update)
-		apiv1.PATCH("/tags/:id/state", tag.Update)
-		apiv1.GET("/tags", tag.List)
+		tags := v1.Group("/tags")
+		{
+			tags.POST("", tag.Create)
+			v1.DELETE(":id", tag.Delete)
+			v1.PUT(":id", tag.Update)
+			v1.PATCH(":id/state", tag.Update)
+			v1.GET("", tag.List)
+		}
+		articles := v1.Group("/articles")
+		{
+			articles.POST("/articles", article.Create)
+			articles.DELETE("/articles/:id", article.Delete)
+			articles.PUT("/articles/:id", article.Update)
+			articles.PATCH("/articles/:id/state", article.Update)
+			articles.GET("/articles/:id", article.Get)
+			articles.GET("/articles", article.List)
+		}
 
-		apiv1.POST("/articles", article.Create)
-		apiv1.DELETE("/articles/:id", article.Delete)
-		apiv1.PUT("/articles/:id", article.Update)
-		apiv1.PATCH("/articles/:id/state", article.Update)
-		apiv1.GET("/articles/:id", article.Get)
-		apiv1.GET("/articles", article.List)
 	}
-
 	return r
 }

@@ -97,6 +97,11 @@ paths:
   /api/v1/tags:
     get:
       parameters:
+      - description: 用户token
+        in: header
+        name: token
+        required: true
+        type: string
       - description: 标签名称
         in: query
         maxLength: 100
@@ -135,10 +140,17 @@ paths:
           schema:
             $ref: '#/definitions/errcode.Error'
       summary: 获取多个标签
+      tags:
+      - tag
     post:
       consumes:
       - application/json
       parameters:
+      - description: 用户token
+        in: header
+        name: token
+        required: true
+        type: string
       - description: 请求体
         in: body
         name: data
@@ -161,9 +173,16 @@ paths:
           schema:
             $ref: '#/definitions/errcode.Error'
       summary: 新增标签
+      tags:
+      - tag
   /api/v1/tags/{id}:
     delete:
       parameters:
+      - description: 用户token
+        in: header
+        name: token
+        required: true
+        type: string
       - description: 标签 ID
         in: path
         name: id
@@ -185,10 +204,17 @@ paths:
           schema:
             $ref: '#/definitions/errcode.Error'
       summary: 删除标签
+      tags:
+      - tag
     put:
       consumes:
       - application/json
       parameters:
+      - description: 用户token
+        in: header
+        name: token
+        required: true
+        type: string
       - description: 标签 ID
         in: path
         name: id
@@ -216,4 +242,6 @@ paths:
           schema:
             $ref: '#/definitions/errcode.Error'
       summary: 更新标签
+      tags:
+      - tag
 swagger: "2.0"

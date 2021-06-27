@@ -16,3 +16,4 @@
 
 # db tmp data
 storage/*
+node_modules

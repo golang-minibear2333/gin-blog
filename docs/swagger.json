@@ -14,8 +14,18 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tag"
+                ],
                 "summary": "获取多个标签",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "maxLength": 100,
                         "type": "string",
@@ -76,8 +86,18 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tag"
+                ],
                 "summary": "新增标签",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "请求体",
                         "name": "data",
@@ -118,8 +138,18 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tag"
+                ],
                 "summary": "更新标签",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "标签 ID",
@@ -162,8 +192,18 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tag"
+                ],
                 "summary": "删除标签",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "标签 ID",
