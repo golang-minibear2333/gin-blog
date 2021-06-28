@@ -14,6 +14,12 @@ import (
 
 func NewRouter() *gin.Engine {
 	r := gin.New()
+	if global.ServerSetting.RunMode == "debug"{
+		r.Use(gin.Logger())
+	}else{
+		// 访问记录日志
+		r.Use(middleware.AccessLog())
+	}
 	// 类似过滤器
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
