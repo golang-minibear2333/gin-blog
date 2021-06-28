@@ -97,7 +97,8 @@ paths:
   /api/v1/tags:
     get:
       parameters:
-      - description: 用户token
+      - default: debug
+        description: 用户token
         in: header
         name: token
         required: true
@@ -146,7 +147,8 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 用户token
+      - default: debug
+        description: 用户token
         in: header
         name: token
         required: true
@@ -178,7 +180,8 @@ paths:
   /api/v1/tags/{id}:
     delete:
       parameters:
-      - description: 用户token
+      - default: debug
+        description: 用户token
         in: header
         name: token
         required: true
@@ -210,7 +213,8 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 用户token
+      - default: debug
+        description: 用户token
         in: header
         name: token
         required: true
