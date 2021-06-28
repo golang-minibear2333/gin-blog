@@ -1,3 +1,11 @@
+#  (2021-06-27)
+
+### Features
+
+* **jwt:** jwt api鉴权 ([f381a20](https://github.com/golang-minibear2333/gin-blog/commit/f381a209081a0b9b865589d88334609fceec6b7d)), closes [#12](https://github.com/golang-minibear2333/gin-blog/issues/12)
+* **jwt:** jWT 权限校验模块 ([#13](https://github.com/golang-minibear2333/gin-blog/issues/13)) ([83236bc](https://github.com/golang-minibear2333/gin-blog/commit/83236bc06a13d3968f36b2c305f4f5f759f4b27b)), closes [#10](https://github.com/golang-minibear2333/gin-blog/issues/10)
+
+
 #  (2021-06-20)
 
 

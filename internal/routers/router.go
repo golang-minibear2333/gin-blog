@@ -41,10 +41,10 @@ func NewRouter() *gin.Engine {
 		tags := v1.Group("/tags")
 		{
 			tags.POST("", tag.Create)
-			v1.DELETE(":id", tag.Delete)
-			v1.PUT(":id", tag.Update)
-			v1.PATCH(":id/state", tag.Update)
-			v1.GET("", tag.List)
+			tags.DELETE(":id", tag.Delete)
+			tags.PUT(":id", tag.Update)
+			tags.PATCH(":id/state", tag.Update)
+			tags.GET("", tag.List)
 		}
 		articles := v1.Group("/articles")
 		{

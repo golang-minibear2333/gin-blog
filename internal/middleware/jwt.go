@@ -3,12 +3,17 @@ package middleware
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/pkg/app"
 	"github.com/golang-minibear2333/gin-blog/pkg/errcode"
 )
 
 func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		if global.ServerSetting.RunMode == "debug"{
+			c.Next()
+			return
+		}
 		var (
 			token string
 			ecode = errcode.Success

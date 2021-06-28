@@ -21,6 +21,7 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "debug",
                         "description": "用户token",
                         "name": "token",
                         "in": "header",
@@ -93,6 +94,7 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "debug",
                         "description": "用户token",
                         "name": "token",
                         "in": "header",
@@ -145,6 +147,7 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "debug",
                         "description": "用户token",
                         "name": "token",
                         "in": "header",
@@ -199,6 +202,7 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "default": "debug",
                         "description": "用户token",
                         "name": "token",
                         "in": "header",
