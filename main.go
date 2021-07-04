@@ -1,6 +1,10 @@
 package main
 
 import (
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/internal/model"
@@ -8,9 +12,6 @@ import (
 	"github.com/golang-minibear2333/gin-blog/pkg/logger"
 	"github.com/golang-minibear2333/gin-blog/pkg/setting"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"log"
-	"net/http"
-	"time"
 )
 
 func init() {
@@ -35,7 +36,7 @@ func init() {
 // @description Go 语言编程之旅：一起用 Go 做项目
 // @termsOfService https://github.com/golang-minibear2333/gin-blog
 func main() {
-	global.Logger.Infof("%s: go-programming-tour-book/%s", "eddycjy", "blog-service")
+	global.Logger.Infof("%s: golang-minibear2333/%s", "project", "blog-service")
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
 	s := &http.Server{
@@ -76,6 +77,7 @@ func setupSetting() error {
 	global.JWTSetting.Expire *= time.Second
 	global.ServerSetting.ReadTimeout *= time.Second
 	global.ServerSetting.WriteTimeout *= time.Second
+	global.AppSetting.DefaultContextTimeout *= time.Second
 	return nil
 }
 
