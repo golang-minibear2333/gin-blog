@@ -26,6 +26,17 @@ go env -w GOPROXY=https://goproxy.cn,direct
 ## 库安装
 
 ```shell
+go mod tidy
+go mod vendor
+```
+
+* 使用`tidy`命令从网络上下载库
+* `vendor`命令把库缓存到本项目中
+* `.gitignore` 已配置，不提交`vendor`文件夹
+
+库已设置到`go mod`中，不需要执行下面的命令，这里只作为库的作用提示
+
+```shell
 go get -u github.com/gin-gonic/gin@v1.6.3
 ```
 
@@ -62,8 +73,14 @@ go get -u github.com/alecthomas/template
 go get -u github.com/go-playground/validator/v10
 ```
 
+panic告警邮件功能
 ```shell
 go get -u gopkg.in/gomail.v2
+```
+
+服务限流
+```shell
+go get -u github.com/juju/ratelimit@v1.0.1
 ```
 # 配置文件
 
