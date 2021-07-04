@@ -22,6 +22,8 @@ App:
     - .jpg
     - .jpeg
     - .png
+  # 默认超时时间
+  DefaultContextTimeout: 30
 #  Database：数据库配置，主要是连接实例所必需的基础参数。
 Database:
   DBType: mysql

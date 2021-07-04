@@ -35,7 +35,7 @@ func NewRouter() *gin.Engine {
 	}
 	// 类似过滤器
 	r.Use(middleware.RateLimiter(methodLimiters))
-	r.Use(middleware.ContextTimeout(60 * time.Second))
+	r.Use(middleware.ContextTimeout(global.AppSetting.DefaultContextTimeout))
 	r.Use(middleware.Translations())
 
 	// 访问 /swagger/index.html 可以查看效果
