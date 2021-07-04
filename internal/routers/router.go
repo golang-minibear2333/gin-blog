@@ -1,28 +1,41 @@
 package routers
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/golang-minibear2333/gin-blog/docs"
 	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/internal/middleware"
 	"github.com/golang-minibear2333/gin-blog/internal/routers/api"
 	v1 "github.com/golang-minibear2333/gin-blog/internal/routers/api/v1"
+	"github.com/golang-minibear2333/gin-blog/pkg/limiter"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-	"net/http"
 )
+
+// 限流模块
+var methodLimiters = limiter.NewMethodLimiter().AddBuckets(limiter.LimiterBucketRule{
+	Key:          "/auth",
+	FillInterval: time.Second,
+	Capacity:     10,
+	Quantum:      10,
+})
 
 func NewRouter() *gin.Engine {
 	r := gin.New()
-	if global.ServerSetting.RunMode == "debug"{
+	if global.ServerSetting.RunMode == "debug" {
 		r.Use(gin.Logger())
-	}else{
+		r.Use(gin.Recovery())
+	} else {
 		// 访问记录日志
 		r.Use(middleware.AccessLog())
+		r.Use(middleware.Recovery())
 	}
 	// 类似过滤器
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
+	r.Use(middleware.RateLimiter(methodLimiters))
+	r.Use(middleware.ContextTimeout(60 * time.Second))
 	r.Use(middleware.Translations())
 
 	// 访问 /swagger/index.html 可以查看效果
