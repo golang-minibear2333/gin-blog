@@ -36,7 +36,7 @@ func (u Upload) UploadFile(c *gin.Context) {
 	// 最后通过入参检查后进行 service 的调用，完成上传和文件保存，返回文件的展示地址。
 	fileInfo, err := svc.UploadFile(upload.FileType(fileType), file, fileHeader)
 	if err != nil {
-		global.Logger.Errorf("svc.UploadFile err: %v", err)
+		global.Logger.Errorf(c, "svc.UploadFile err: %v", err)
 		response.ToErrorResponse(errcode.ErrorUploadFileFail.WithDetails(err.Error()))
 		return
 	}

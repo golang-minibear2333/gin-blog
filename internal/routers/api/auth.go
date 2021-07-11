@@ -15,7 +15,7 @@ func GetAuth(c *gin.Context) {
 	// 校验及获取入参,绑定获取到的 app_key 和 app_secrect
 	valid, errs := app.BindAndValidHeader(c, &param)
 	if !valid {
-		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
@@ -24,14 +24,14 @@ func GetAuth(c *gin.Context) {
 	// 进行数据库查询，检查认证信息是否存在
 	err := svc.CheckAuth(&param)
 	if err != nil {
-		global.Logger.Errorf("svc.CheckAuth err: %v", err)
+		global.Logger.Errorf(c, "svc.CheckAuth err: %v", err)
 		response.ToErrorResponse(errcode.UnauthorizedAuthNotExist)
 		return
 	}
 	// 若存在则进行 Token 的生成并返回。
 	token, err := app.GenerateToken(param.AppKey, param.AppSecret)
 	if err != nil {
-		global.Logger.Errorf("app.GenerateToken err: %v", err)
+		global.Logger.Errorf(c, "app.GenerateToken err: %v", err)
 		response.ToErrorResponse(errcode.UnauthorizedTokenGenerate)
 		return
 	}

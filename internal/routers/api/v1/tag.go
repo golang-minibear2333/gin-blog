@@ -36,7 +36,7 @@ func (t Tag) List(c *gin.Context) {
 	// 使用 internal/service/tag.go 内的结构体验证ctx请求带上的参数是否合法，并根据地域进行翻译报错
 	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
-		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
@@ -48,14 +48,14 @@ func (t Tag) List(c *gin.Context) {
 	// 这里查询列表，如果传入标签名就只查询某同名标签（未做唯一性验证）
 	totalRows, err := svc.CountTag(&service.CountTagRequest{Name: param.Name, State: param.State})
 	if err != nil {
-		global.Logger.Errorf("svc.CountTag err: %v", err)
+		global.Logger.Errorf(c, "svc.CountTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorCountTagFail)
 		return
 	}
 	// 获取标签列表
 	tags, err := svc.GetTagList(&param, &pager)
 	if err != nil {
-		global.Logger.Errorf("svc.GetTagList err: %v", err)
+		global.Logger.Errorf(c, "svc.GetTagList err: %v", err)
 		response.ToErrorResponse(errcode.ErrorGetTagListFail)
 		return
 	}
@@ -80,7 +80,7 @@ func (t Tag) Create(c *gin.Context) {
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
-		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
@@ -88,7 +88,7 @@ func (t Tag) Create(c *gin.Context) {
 	svc := service.New(c.Request.Context())
 	err := svc.CreateTag(&param)
 	if err != nil {
-		global.Logger.Errorf("svc.CreateTag err: %v", err)
+		global.Logger.Errorf(c, "svc.CreateTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorCreateTagFail)
 		return
 	}
@@ -114,7 +114,7 @@ func (t Tag) Update(c *gin.Context) {
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
-		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
@@ -122,7 +122,7 @@ func (t Tag) Update(c *gin.Context) {
 	svc := service.New(c.Request.Context())
 	err := svc.UpdateTag(&param)
 	if err != nil {
-		global.Logger.Errorf("svc.UpdateTag err: %v", err)
+		global.Logger.Errorf(c, "svc.UpdateTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorUpdateTagFail)
 		return
 	}
@@ -147,7 +147,7 @@ func (t Tag) Delete(c *gin.Context) {
 	valid, errs := app.BindAndValidBody(c, &param)
 	if !valid {
 		// TODO 这些代码重复太多次有办法抽出来吗？
-		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		global.Logger.Errorf(c, "app.BindAndValid errs: %v", errs)
 		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
 		return
 	}
@@ -155,7 +155,7 @@ func (t Tag) Delete(c *gin.Context) {
 	svc := service.New(c.Request.Context())
 	err := svc.DeleteTag(&param)
 	if err != nil {
-		global.Logger.Errorf("svc.DeleteTag err: %v", err)
+		global.Logger.Errorf(c, "svc.DeleteTag err: %v", err)
 		response.ToErrorResponse(errcode.ErrorDeleteTagFail)
 		return
 	}

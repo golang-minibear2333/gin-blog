@@ -2,19 +2,20 @@ package middleware
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/pkg/app"
 	"github.com/golang-minibear2333/gin-blog/pkg/email"
 	"github.com/golang-minibear2333/gin-blog/pkg/errcode"
-	"time"
 )
 
 func RecoveryPrint() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				global.Logger.WithCallersFrames().Errorf("panic recover err: %v", err)
+				global.Logger.WithCallersFrames().Errorf(c, "panic recover err: %v", err)
 				app.NewResponse(c).ToErrorResponse(errcode.ServerError)
 				c.Abort()
 			}
@@ -35,7 +36,7 @@ func Recovery() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
-				global.Logger.WithCallersFrames().Errorf("panic recover err: %v", err)
+				global.Logger.WithCallersFrames().Errorf(c, "panic recover err: %v", err)
 
 				err := defailtMailer.SendMail(
 					global.EmailSetting.To,
@@ -43,7 +44,7 @@ func Recovery() gin.HandlerFunc {
 					fmt.Sprintf("错误信息: %v", err),
 				)
 				if err != nil {
-					global.Logger.Panicf("mail.SendMail err: %v", err)
+					global.Logger.Panicf(c, "mail.SendMail err: %v", err)
 				}
 
 				app.NewResponse(c).ToErrorResponse(errcode.ServerError)
