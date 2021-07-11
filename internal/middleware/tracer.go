@@ -3,6 +3,8 @@ package middleware
 import (
 	"context"
 
+	"github.com/uber/jaeger-client-go"
+
 	"github.com/opentracing/opentracing-go/ext"
 
 	"github.com/golang-minibear2333/gin-blog/global"
@@ -36,6 +38,19 @@ func Tracing() func(c *gin.Context) {
 			)
 		}
 		defer span.Finish()
+		var traceID string
+		var spanID string
+		// 通过span context 获取 traceID 和 spanID
+		var spanContext = span.Context()
+		switch spanContext.(type) {
+		case jaeger.SpanContext:
+			jaegerContext := spanContext.(jaeger.SpanContext)
+			traceID = jaegerContext.TraceID().String()
+			spanID = jaegerContext.SpanID().String()
+		}
+		// 注册到上下文元数据中
+		c.Set("X-Trace-ID", traceID)
+		c.Set("X-Span-ID", spanID)
 		c.Request = c.Request.WithContext(newCtx)
 		c.Next()
 	}

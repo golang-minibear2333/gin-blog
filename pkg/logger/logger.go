@@ -6,6 +6,8 @@ import (
 	"io"
 	"log"
 	"runtime"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Level int8
@@ -107,4 +109,17 @@ func (l *Logger) WithCallersFrames() *Logger {
 	ll := l.clone()
 	ll.callers = callers
 	return ll
+}
+
+func (l *Logger) WithTrace() *Logger {
+	ginCtx, ok := l.ctx.(*gin.Context)
+	if ok {
+		return l.WithFields(Fields{
+			// 把元数据中的SpanID和traceID读取出来，使用WithFields作为日志的公共字段
+			// 并在后续调用中补齐
+			"trace_id": ginCtx.MustGet("X-Trace-ID"),
+			"span_id":  ginCtx.MustGet("X-Span-ID"),
+		})
+	}
+	return l
 }

@@ -2,10 +2,11 @@ package middleware
 
 import (
 	"bytes"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/pkg/logger"
-	"time"
 )
 
 // AccessLogWriter 实现 http.ResponseWriter
@@ -48,7 +49,8 @@ func AccessLog() gin.HandlerFunc {
 		// response：当前的请求结果响应主体。
 		// status_code：当前的响应结果状态码。
 		// begin_time/end_time：调用方法的开始时间，调用方法结束的结束时间。
-		global.Logger.WithFields(fields).Infof("access log: method: %s, status_code: %d, begin_time: %d, end_time: %d",
+		s := "access log: method: %s, status_code: %d, begin_time: %d, end_time: %d"
+		global.Logger.WithFields(fields).Infof(c, s,
 			c.Request.Method,
 			bodyWriter.Status(),
 			beginTime,
