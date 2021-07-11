@@ -1,9 +1,12 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/golang-minibear2333/gin-blog/pkg/version"
 
 	"github.com/golang-minibear2333/gin-blog/pkg/tracer"
 
@@ -17,6 +20,7 @@ import (
 )
 
 func init() {
+	flagRun()
 	// 配置初始化，读取到全局model里面
 	err := setupSetting()
 	if err != nil {
@@ -54,7 +58,10 @@ func main() {
 	}
 	s.ListenAndServe()
 }
-
+func flagRun() {
+	flag.Parse()
+	version.CmdParseVersion()
+}
 func setupSetting() error {
 	newSetting, err := setting.NewSetting()
 	if err != nil {
