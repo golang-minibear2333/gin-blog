@@ -37,6 +37,8 @@ func NewRouter() *gin.Engine {
 	r.Use(middleware.RateLimiter(methodLimiters))
 	r.Use(middleware.ContextTimeout(global.AppSetting.DefaultContextTimeout))
 	r.Use(middleware.Translations())
+	// 链路追踪
+	r.Use(middleware.Tracing())
 
 	// 访问 /swagger/index.html 可以查看效果
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
