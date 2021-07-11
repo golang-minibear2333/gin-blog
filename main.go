@@ -46,7 +46,7 @@ func init() {
 // @description Go 语言编程之旅：一起用 Go 做项目
 // @termsOfService https://github.com/golang-minibear2333/gin-blog
 func main() {
-	global.Logger.Infof("%s: golang-minibear2333/%s", "project", "gin-blog")
+	global.Logger.Infof("%s: golang-minibear2333/%s", "project", version.AppName)
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
 	s := &http.Server{
@@ -118,7 +118,7 @@ func setupLogger() error {
 
 func setupTracer() error {
 	jaegerTracer, _, err := tracer.NewJaegerTracer(
-		"gin-blog",
+		version.AppName,
 		"127.0.0.1:6831",
 	)
 	if err != nil {
