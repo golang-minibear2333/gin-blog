@@ -74,14 +74,28 @@ go get -u github.com/go-playground/validator/v10
 ```
 
 panic告警邮件功能
+
 ```shell
 go get -u gopkg.in/gomail.v2
 ```
 
 服务限流
+
 ```shell
 go get -u github.com/juju/ratelimit@v1.0.1
 ```
+
+链路追踪
+
+```shell
+go get -u github.com/opentracing/opentracing-go@v1.0.0
+go get -u github.com/uber/jaeger-client-go@v2.22.1
+```
+
+* 接入方法 `docker-compose up -d jaeger` 启动追踪服务并访问`http://localhost:16686/`转到`jaeger WEB UI`
+* 启动`gin-blog`程序访问`localhost:8000/swagger/index.html`，随意访问一个接口
+* 可以在追踪服务界面看到效果
+
 # 配置文件
 
 ## 邮件配置

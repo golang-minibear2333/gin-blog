@@ -18,3 +18,33 @@ services:
       - MYSQL_USER=blog_service
       - MYSQL_PASSWORD=blog_service
     restart: unless-stopped
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.16
+    ports:
+      - "5775:5775/udp" # compact协议接收zipkin.thrift数据
+      - "6831:6831/udp" # compact协议接收jaeger.thrift数据
+      - "6832:6832/udp" # 以binary协议接收jaeger.thrift数据
+      - "5778:5778" # Jaeger 的服务端配置端口
+      - "16686:16686" # web UI
+      - "14269:14268" # 通过Client接收jaeger.thrift数据
+      - "9411:9411" # 兼容 Zipkin 的HTTP端口
+#    networks:
+#      - jaeger-example
+#  hotrod:
+#    image: jaegertracing/example-hotrod:latest
+#    ports:
+#      - "8080:8080"
+#    command: ["all"]
+#    environment:
+#      - JAEGER_AGENT_HOST=jaeger
+#      # Note: if your application is using Node.js Jaeger Client, you need port 6832,
+#      #       unless issue https://github.com/jaegertracing/jaeger/issues/1596 is resolved.
+#      - JAEGER_AGENT_PORT=6831
+#    networks:
+#      - jaeger-example
+#    depends_on:
+#      - jaeger
+#
+#networks:
+#  jaeger-example:

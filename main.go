@@ -1,9 +1,14 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/golang-minibear2333/gin-blog/pkg/version"
+
+	"github.com/golang-minibear2333/gin-blog/pkg/tracer"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-minibear2333/gin-blog/global"
@@ -15,6 +20,7 @@ import (
 )
 
 func init() {
+	flagRun()
 	// 配置初始化，读取到全局model里面
 	err := setupSetting()
 	if err != nil {
@@ -29,6 +35,10 @@ func init() {
 	if err != nil {
 		log.Fatalf("init.setupDBEngine err: %v", err)
 	}
+	err = setupTracer()
+	if err != nil {
+		log.Fatalf("init.setupTracer err: %v", err)
+	}
 }
 
 // @title 博客系统
@@ -36,7 +46,7 @@ func init() {
 // @description Go 语言编程之旅：一起用 Go 做项目
 // @termsOfService https://github.com/golang-minibear2333/gin-blog
 func main() {
-	global.Logger.Infof("%s: golang-minibear2333/%s", "project", "blog-service")
+	global.Logger.Infof("%s: golang-minibear2333/%s", "project", "gin-blog")
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
 	s := &http.Server{
@@ -48,7 +58,10 @@ func main() {
 	}
 	s.ListenAndServe()
 }
-
+func flagRun() {
+	flag.Parse()
+	version.CmdParseVersion()
+}
 func setupSetting() error {
 	newSetting, err := setting.NewSetting()
 	if err != nil {
@@ -100,5 +113,18 @@ func setupLogger() error {
 		LocalTime: true,
 	}, "", log.LstdFlags).WithCaller(2)
 
+	return nil
+}
+
+func setupTracer() error {
+	jaegerTracer, _, err := tracer.NewJaegerTracer(
+		"gin-blog",
+		"127.0.0.1:6831",
+	)
+	if err != nil {
+		return err
+	}
+	// 放到全局变量中，供后续中间件或者不同的自定义Span中打点使用
+	global.Tracer = jaegerTracer
 	return nil
 }
