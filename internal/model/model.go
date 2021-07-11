@@ -2,10 +2,12 @@ package model
 
 import (
 	"fmt"
+	"time"
+
+	otgorm "github.com/eddycjy/opentracing-gorm"
 	"github.com/golang-minibear2333/gin-blog/global"
 	"github.com/golang-minibear2333/gin-blog/pkg/setting"
 	"github.com/jinzhu/gorm"
-	"time"
 
 	// 必须以此引入mysql驱动库
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -46,7 +48,8 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	db.Callback().Delete().Replace("gorm:delete", deleteCallback)
 	db.DB().SetMaxIdleConns(databaseSetting.MaxIdleConns)
 	db.DB().SetMaxOpenConns(databaseSetting.MaxOpenConns)
-
+	// SQL 链路追踪注册回调，逻辑就是先注册上下文，再加这里的回调
+	otgorm.AddGormCallbacks(db)
 	return db, nil
 }
 
@@ -80,6 +83,7 @@ func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 		_ = scope.SetColumn("ModifiedOn", time.Now().Unix())
 	}
 }
+
 // 这里参考了源码 https://gitea.com/jinzhu/gorm/src/branch/master/callback_delete.go
 func deleteCallback(scope *gorm.Scope) {
 	if !scope.HasError() {
