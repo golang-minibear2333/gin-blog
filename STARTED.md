@@ -96,6 +96,11 @@ go get -u github.com/uber/jaeger-client-go@v2.22.1
 * 启动`gin-blog`程序访问`localhost:8000/swagger/index.html`，随意访问一个接口
 * 可以在追踪服务界面看到效果
 
+SQL 追踪
+
+```shell
+go get -u github.com/eddycjy/opentracing-gorm
+```
 # 配置文件
 
 ## 邮件配置
